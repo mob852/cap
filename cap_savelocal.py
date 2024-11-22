@@ -18,7 +18,7 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
 # Define the codec and create a VideoWriter object to save the video
 fourcc = cv2.VideoWriter_fourcc(*'XVID')  # You can use other codecs like 'MJPG', 'X264', etc.
-out = cv2.VideoWriter('output_camera2.avi', fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
+out = cv2.VideoWriter('output_camera2.avi', fourcc, 5.0, (int(cap.get(3)), int(cap.get(4))))
 
 # 创建一个窗口
 cv2.namedWindow("Camera", cv2.WINDOW_NORMAL)  # 设置为可调整大小
@@ -42,8 +42,8 @@ while True:
     # # Write the frame to the video file
     out.write(frame)
 
-    # # Display the captured frame in a window named 'Camera'
-    cv2.imshow('Camera', frame)
+    # # # Display the captured frame in a window named 'Camera'
+    # cv2.imshow('Camera', frame)
 
     # Check if the user pressed the 'q' key to exit
     if cv2.waitKey(1) & 0xFF == ord('q'):
