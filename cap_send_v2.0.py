@@ -6,17 +6,24 @@ from datetime import datetime  # Import datetime module
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 262144)  # 256 KB receive buffer
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 262144)  # 256 KB send buffer
-sock.connect(('192.168.1.109', 12346))  # Connect to the server
+sock.connect(('192.168.1.67', 12346))  # Connect to the server
 
 # Capture video from webcam
 cap = cv2.VideoCapture(0)
+# Set the desired resolution (e.g., 1280x720)
+# width = 2590
+# height = 1944
+width = 1920
+height = 1080
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 while True:
     ret, frame = cap.read()
     if not ret:
         break
 
-    # Resize the frame to reduce resolution (optional)
-    frame = cv2.resize(frame, (640, 480))  # Adjust resolution as needed
+    # # Resize the frame to reduce resolution (optional)
+    # frame = cv2.resize(frame, (1920, 1080))  # Adjust resolution as needed
 
     # Compress the frame to JPEG format
     ret, frame_jpeg = cv2.imencode('.jpg', frame)

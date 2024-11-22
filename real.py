@@ -14,14 +14,35 @@ if not cap.isOpened():
     print("Error: Could not open video capture.")
     exit()
 
-# Get the original frame width and height
-frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+# Read one frame to determine the new dimensions after undistortion
+ret, frame = cap.read()
+if not ret:
+    print("Error: Could not read initial frame.")
+    cap.release()
+    exit()
 
-# Define the codec and create a VideoWriter object to save the video
-fourcc = cv2.VideoWriter_fourcc(*'XVID')  # You can use other codecs like 'MJPG', 'X264', etc.
-out = cv2.VideoWriter('undistorted_output.avi', fourcc, 20.0, (frame_width, frame_height))
+# Get the original frame dimensions
+h, w = frame.shape[:2]
 
+# Compute the optimal camera matrix and ROI for cropping
+new_camera_matrix, roi = cv2.getOptimalNewCameraMatrix(camera_matrix, distortion_coefficients, (w, h), 1, (w, h))
+
+# Compute the undistorted frame once to determine the dimensions
+undistorted_frame = cv2.undistort(frame, camera_matrix, distortion_coefficients, None, new_camera_matrix)
+
+# Crop the undistorted frame based on the ROI
+x, y, w, h = roi
+undistorted_frame = undistorted_frame[y:y+h, x:x+w]
+
+# Get the corrected frame dimensions
+corrected_width = undistorted_frame.shape[1]
+corrected_height = undistorted_frame.shape[0]
+
+# Define the codec and create a VideoWriter object with the corrected dimensions
+fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Codec for AVI files
+out = cv2.VideoWriter('undistorted_output.avi', fourcc, 20.0, (corrected_width, corrected_height))
+
+# Start capturing and saving video frames
 while True:
     # Capture a frame from the camera
     ret, frame = cap.read()
@@ -30,18 +51,13 @@ while True:
         print("Error: Could not read frame.")
         break
 
-    # Get the dimensions of the frame
-    h, w = frame.shape[:2]
-
-    # Compute the optimal camera matrix and undistort the image
-    new_camera_matrix, roi = cv2.getOptimalNewCameraMatrix(camera_matrix, distortion_coefficients, (w, h), 1, (w, h))
+    # Undistort the frame
     undistorted_frame = cv2.undistort(frame, camera_matrix, distortion_coefficients, None, new_camera_matrix)
 
-    # Optionally crop the image if needed based on the ROI
-    x, y, w, h = roi
+    # Crop the undistorted frame
     undistorted_frame = undistorted_frame[y:y+h, x:x+w]
 
-    # Display the undistorted frame
+    # # Display the undistorted frame (optional)
     # cv2.imshow('Undistorted Camera', undistorted_frame)
 
     # Write the undistorted frame to the video file

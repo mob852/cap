@@ -2,7 +2,11 @@ import cv2
 
 # Create a VideoCapture object to access the USB camera
 cap = cv2.VideoCapture(0)  # 0 is usually the default camera
-
+# Try setting a custom resolution
+desired_width = 1920
+desired_height = 1080
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, desired_width)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, desired_height)
 if not cap.isOpened():
     print("Error: Could not open video capture.")
     exit()

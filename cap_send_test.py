@@ -6,7 +6,7 @@ from datetime import datetime  # Import datetime module
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 262144)  # 256 KB receive buffer
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 262144)  # 256 KB send buffer
-sock.connect(('192.168.1.109', 12346))  # Connect to the server
+sock.connect(('192.168.1.67', 12346))  # Connect to the server
 
 # Capture video from webcam
 cap = cv2.VideoCapture(0)
