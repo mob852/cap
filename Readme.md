@@ -4,3 +4,4 @@ cap_send_v1.0.py 实现传送摄像头数据到上位机（时间数据不能跟
 cap_send_v2.0.py 实现时间跟摄像头数据同时发送到上位机（通过时间跟摄像头分两次发送来解决）
 cap_send_test.py 实现时间 摄像头数据 跟踪目标 发送到上位机
 cap_savelocal.py 实现时间 摄像头数据 保存在本地 
+rtsp_latency.py 实现720p低延迟传输摄像头数据
