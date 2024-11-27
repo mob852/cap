@@ -20,10 +20,10 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')  # You can use other codecs like 'MJPG', 'X264', etc.
 out = cv2.VideoWriter('output_camera2.avi', fourcc, 5.0, (int(cap.get(3)), int(cap.get(4))))
 
-# 创建一个窗口
-cv2.namedWindow("Camera", cv2.WINDOW_NORMAL)  # 设置为可调整大小
-# 设置窗口大小（例如 640x480）
-cv2.resizeWindow("Camera", 640, 480)
+# # 创建一个窗口
+# cv2.namedWindow("Camera", cv2.WINDOW_NORMAL)  # 设置为可调整大小
+# # 设置窗口大小（例如 640x480）
+# cv2.resizeWindow("Camera", 640, 480)
 while True:
     # Capture a frame from the camera
     ret, frame = cap.read()

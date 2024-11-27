@@ -1,0 +1,2 @@
+from rtsp_latency import measure_client_latency
+measure_client_latency()
